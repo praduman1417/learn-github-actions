@@ -1,0 +1,10 @@
+name: learn-github-acctions
+on:
+  push:
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: demo step-1
+        run: |
+          echo "Execution: demo step-1"
