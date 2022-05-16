@@ -19,4 +19,21 @@ jobs:
           aws-region: us-east-1 # use your region here.
       - name: check the S3 bucket list 
         run: aws s3 ls
+      
+      - name: Checkout
+        uses: actions/checkout@v2
         
+      - name: make terraform cli
+        uses: hashicorp/setup-terraform@v1
+
+      - name: run terraform fmt
+        run: terraform fmt -check
+
+      - name: run terraform init
+        run: terraform init
+
+      - name: run terraform plan 
+        run: terraform plan -no-color
+
+      - name: terraform apply
+        run: terraform apply -auto-approve
