@@ -12,15 +12,21 @@ jobs:
       - name: demo step-1
         run: |
           echo "Execution: demo step-1"
-      - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: arn:aws:iam::687669071903:role/learn-github-actions
-          role-duration-seconds: 900 # the ttl of the session, in seconds.
-          aws-region: us-east-1 # use your region here.
+      # - name: configure aws credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     role-to-assume: arn:aws:iam::687669071903:role/learn-github-actions
+      #     role-duration-seconds: 900 # the ttl of the session, in seconds.
+      #     aws-region: us-east-1 # use your region here.
       - name: check the S3 bucket list 
         run: aws s3 ls
+<<<<<<< HEAD
      
+=======
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      
+>>>>>>> 05a63409662adbaf24d1a0c8a52b566f3d795946
       - name: Checkout
         uses: actions/checkout@v2
       # - name: execute shell script
