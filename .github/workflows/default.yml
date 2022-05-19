@@ -20,7 +20,7 @@ jobs:
           aws-region: us-east-1 # use your region here.
       - name: check the S3 bucket list 
         run: aws s3 ls
-      
+     
       - name: Checkout
         uses: actions/checkout@v2
       # - name: execute shell script
