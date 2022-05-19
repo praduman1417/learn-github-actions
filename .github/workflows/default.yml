@@ -23,10 +23,10 @@ jobs:
       
       - name: Checkout
         uses: actions/checkout@v2
-      - name: execute shell script
-        run:  |
-          chmod u+x script.sh
-          ./script.sh
+      # - name: execute shell script
+      #   run:  |
+      #     chmod u+x script.sh
+      #     ./script.sh
 
       - name: make terraform cli
         uses: hashicorp/setup-terraform@v1
