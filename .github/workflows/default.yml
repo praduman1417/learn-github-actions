@@ -42,8 +42,11 @@ jobs:
 
       - name: Terraform Validate
         id: validate
-        run: terraform validate -no-color             
-
+        run: terraform validate -no-color    
+        
+      - name: get temp creds
+        run: aws sts get-caller-identity
+        
       - name: run terraform plan 
         id: plan
         run: terraform plan -no-color
