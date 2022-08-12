@@ -26,7 +26,7 @@ jobs:
           echo "connection string: ${{env.WORKER_NODE_IP}}:${{env.ARGOCD_PORT}}"
 
       - name: argocd login
-        run: argocd login  ${{env.WORKER_NODE_IP}}:${{env.ARGOCD_PORT}} --username ${{ARGO_USER}} --password ${{ARGO_PASS}} --insecure
+        run: argocd login  ${{env.WORKER_NODE_IP}}:${{env.ARGOCD_PORT}} --username ${{env.ARGO_USER}} --password ${{env.ARGO_PASS}} --insecure
      
       - name: argocd app sync 
         run: |
