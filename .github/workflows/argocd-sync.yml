@@ -6,7 +6,7 @@ on:
       environment:
         description: Environment to sync argocd application
         required: true
-        default: build
+        default: mw-bastion
         type: choice
         options: [mw-bastion,build, dev, qa]
 
@@ -21,12 +21,12 @@ jobs:
     steps:
       - name: setting the argocd connection 
         run: |
-          WORKER_NODE_IP=$(kubectl get nodes | grep -v controlplane | awk '{print $1}' | tail -1)
-          ARGOCD_PORT=$(kubectl -n argocd get svc argocd-server -o jsonpath='{.spec.ports[].nodePort}')
-          echo "connection string: ${{WORKER_NODE_IP}}:${{ARGOCD_PORT}}"
+          echo "WORKER_NODE_IP=$(kubectl get nodes | grep -v controlplane | awk '{print $1}' | tail -1)" >> $GITHUB_ENV
+          echo "ARGOCD_PORT=$(kubectl -n argocd get svc argocd-server -o jsonpath='{.spec.ports[].nodePort}')" >> $GITHUB_ENV
+          echo "connection string: ${{env.WORKER_NODE_IP}}:${{env.ARGOCD_PORT}}"
 
       - name: argocd login
-        run: argocd login  ${{WORKER_NODE_IP}}:${{ARGOCD_PORT}} --username ${{ARGO_USER}} --password ${{ARGO_PASS}} --insecure
+        run: argocd login  ${{env.WORKER_NODE_IP}}:${{env.ARGOCD_PORT}} --username ${{ARGO_USER}} --password ${{ARGO_PASS}} --insecure
      
       - name: argocd app sync 
         run: |
