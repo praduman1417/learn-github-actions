@@ -6,14 +6,14 @@ on:
       environment:
         description: Environment to sync argocd application
         required: true
-        default: mw-bastion
+        default: bastion
         type: choice
-        options: [mw-bastion,build, dev, qa]
+        options: [bastion, build, dev, qa]
 
 jobs:
   Argo-job-sync:
-    if: ${{ inputs.environment }} == 'mw-bastion'
-    runs-on: ['mw-bastion']
+    if: ${{ inputs.environment }} == 'bastion'
+    runs-on: ['bastion']
     env:
       ARGO_USER: admin  
       ARGO_PASS: unified2021
