@@ -30,7 +30,6 @@ jobs:
      
       - name: argocd app sync 
         run: |
-          ARGOCD_APPS=$(argocd app list | awk '{print $1}' | grep -v 'NAME\|root') 
-          for argo_app in $ARGOCD_APPS; do
+          for argo_app in jci-cert-manager cert-manager; do
             argocd app set $argo_app --sync-policy automated >/dev/null 2>&1
           done
