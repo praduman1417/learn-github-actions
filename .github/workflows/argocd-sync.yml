@@ -11,7 +11,7 @@ on:
         options: [mw-bastion,build, dev, qa]
 
 jobs:
-  Argo-${{ inputs.environment }}-sync:
+  Argo-job-sync:
     if: ${{ inputs.environment }} == 'mw-bastion'
     runs-on: ['mw-bastion']
     env:
