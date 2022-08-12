@@ -1,0 +1,36 @@
+name: Argo-CD-sync
+on:
+  push:
+  # workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment to sync argocd application
+        required: true
+        default: build
+        type: choice
+        options: [mw-bastion,build, dev, qa]
+
+jobs:
+  Argo-${{ inputs.environment }}-sync:
+    if: ${{ inputs.environment }} == 'mw-bastion'
+    runs-on: ['mw-bastion']
+    env:
+      ARGO_USER: admin  
+      ARGO_PASS: unified2021
+   
+    steps:
+      - name: setting the argocd connection 
+        run: |
+          WORKER_NODE_IP=$(kubectl get nodes | grep -v controlplane | awk '{print $1}' | tail -1)
+          ARGOCD_PORT=$(kubectl -n argocd get svc argocd-server -o jsonpath='{.spec.ports[].nodePort}')
+          echo "connection string: ${{WORKER_NODE_IP}}:${{ARGOCD_PORT}}"
+
+      - name: argocd login
+        run: argocd login  ${{WORKER_NODE_IP}}:${{ARGOCD_PORT}} --username ${{ARGO_USER}} --password ${{ARGO_PASS}} --insecure
+     
+      - name: argocd app sync 
+        run: |
+          ARGOCD_APPS=$(argocd app list | awk '{print $1}' | grep -v 'NAME\|root') 
+          for argo_app in $ARGOCD_APPS; do
+            argocd app set $argo_app --sync-policy automated >/dev/null 2>&1
+          done

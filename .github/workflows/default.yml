@@ -1,7 +1,8 @@
 name: learn-github-acctions
 on:
-  push:
-  pull_request:
+  workflow_dispatch:              # used for running it manually
+  # push:
+  # pull_request:
     
 permissions:
   id-token: write # required to use OIDC authentication
